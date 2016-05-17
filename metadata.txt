@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Since 
+# version 2.0 of QGIS this is the proper way to supply 
+# information about a plugin. The old method of 
+# embedding metadata in __init__.py will 
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=NetworkTransformer
+qgisMinimumVersion=2.0
+description=This plugin performs basic transformation on a network class in qgis.
+version=0.1
+author=Stephen Law
+email=s.law@spacesyntax.com
+
+about=NetworkTransformer date: 2016-02-29 copyright: (C) 2016 by Stephen Law email: s.law@spacesyntax.com
+
+tracker=github.com
+repository=github.com
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=
+
+homepage=
+category=Vector
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
