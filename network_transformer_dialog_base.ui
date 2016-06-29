@@ -6,60 +6,61 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>582</height>
+    <width>725</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>NetworkTransformer</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QSpinBox" name="spinBox">
-     <property name="maximum">
-      <number>360</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QRadioButton" name="radioButton">
-     <property name="text">
-      <string>Rotate Line</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QSpinBox" name="spinBox_2">
-     <property name="maximum">
-      <number>1000000000</number>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
+   <item row="4" column="0">
     <widget class="QRadioButton" name="radioButton_2">
      <property name="text">
       <string>Resize Line</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QRadioButton" name="radioButton_3">
-     <property name="text">
-      <string>Rescale Line</string>
+   <item row="4" column="2">
+    <widget class="QSpinBox" name="spinBox_2">
+     <property name="suffix">
+      <string>m</string>
      </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
      <property name="maximum">
-      <double>1000000000.000000000000000</double>
+      <number>1000000000</number>
      </property>
      <property name="singleStep">
-      <double>0.100000000000000</double>
+      <number>5</number>
+     </property>
+     <property name="value">
+      <number>25</number>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
+    <widget class="QRadioButton" name="radioButton">
+     <property name="text">
+      <string>Rotate Line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QSpinBox" name="spinBox">
+     <property name="suffix">
+      <string>deg</string>
+     </property>
+     <property name="maximum">
+      <number>360</number>
+     </property>
+     <property name="singleStep">
+      <number>5</number>
+     </property>
+     <property name="value">
+      <number>90</number>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
     <widget class="QPushButton" name="pushButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -68,7 +69,44 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Play</string>
+      <string>Run</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.250000000000000</double>
+     </property>
+     <property name="value">
+      <double>2.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QRadioButton" name="radioButton_3">
+     <property name="text">
+      <string>Rescale Line</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QComboBox" name="comboBox"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Layer:</string>
      </property>
     </widget>
    </item>
