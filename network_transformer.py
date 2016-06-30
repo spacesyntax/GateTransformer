@@ -34,7 +34,7 @@ from qgis.gui import *
 import os
 from PyQt4 import QtCore, QtGui
 import math
-
+import math
 
 class NetworkTransformer:
     """QGIS Plugin Implementation."""

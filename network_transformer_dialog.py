@@ -1,26 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-/***************************************************************************
- NetworkTransformerDialog
-                                 A QGIS plugin
- This plugin performs basic transformation on a network class in qgis.
-                             -------------------
-        begin                : 2016-02-29
-        git sha              : $Format:%H$
-        copyright            : (C) 2016 by Stephen Law
-        email                : s.law@spacesyntax.com
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-"""
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  NetworkTransformer
@@ -54,10 +31,7 @@ from qgis.gui import *
 import os
 from PyQt4 import QtCore, QtGui
 import math
-
-
 import os
-
 from PyQt4 import QtGui, uic
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -65,6 +39,13 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 
 class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
 
+# dialog class has get and set update functions
+# this is in dialog.py
+# QtCore.pyqtSignal() - defines a signal
+# self.update.emit() - this emits signal
+# this is in tool.py
+# self.update.connect() - connects with signal
+# self.update.disconnect() - this disconnect with signal
 
 ############################ initialisation ############################
 
@@ -185,8 +166,6 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
         layer.updateExtents()
         layer.reload()
         layer.removeSelection()
-
-
 
 
 ################################# run and close methods #############################
