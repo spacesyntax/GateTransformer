@@ -25,9 +25,9 @@ import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
 from PyQt4.QtGui import QAction, QIcon, QFileDialog, QMessageBox, QProgressBar,QComboBox
 from qgis.core import *
-from qgis.gui import *
+#from qgis.gui import *
 import os
-from PyQt4 import QtCore, QtGui
+#from PyQt4 import QtCore, QtGui
 import math
 #import Transformer_analysis
 
@@ -57,8 +57,7 @@ class NetworkTransformer:
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
-
-        # transformer analysis
+        # transformer analysis class initialisation
         #self.transformer_analysis = Transformer_analysis.transformer_analysis(self.iface)
 
         # initialize locale

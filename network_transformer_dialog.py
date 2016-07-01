@@ -52,7 +52,6 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
         self.resize_radio.toggled.connect(self.disable_button)
         self.rescale_radio.toggled.connect(self.disable_button)
 
-
         # rotate_button is checked for default
         self.rotate_radio.click()
 
