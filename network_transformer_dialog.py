@@ -58,132 +58,39 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
-
-        ###### YOUR OWN CODE ######
-        # click pushButtons
-        self.pushButton.clicked.connect(self.run_method)
-        self.pushButton_2.clicked.connect(self.close_method)
-
-        # put current layers into comboBox
-        layers = QgsMapLayerRegistry.instance().mapLayers().values()
-        for layer in layers:
-            if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Line:
-               self.comboBox.addItem( layer.name(), layer )
+        # rotate_button is checked for default
+        self.rotate_radio.click()
 
 
-        x=1
+    # define series of function
+    # disable buttons - switch between gate transformation
+    # update layer - fill combo with layer lists
+    def update_layer(self,layer_objects):
+        for layer in layer_objects:
+            self.comboBox.addItem(layer[0],layer[1])
 
-
-########################### transformation block ########################
-
-# rotate_line_scripts
-    def rotate_line(self):
-
+    # get layer - retrieving the value of the current selected layer
+    def get_layer(self):
         index = self.comboBox.currentIndex()
         layer = self.comboBox.itemData(index)
+        return layer
 
-        #layer = self.iface.activeLayer()
-        provider = layer.dataProvider()
-        layer.startEditing()
-        layer.selectAll()
+    # get transformation - this will retrieve which transformation and value of transformation
+    def get_transformation(self):
+        transformation = 0
+        value = 0
+        if self.rotate_radio.isChecked():
+            transformation = 1
+            value = self.spinBox.value()
+        elif self.resize_radio.isChecked():
+            transformation = 2
+            value = self.spinBox_2.value()
+        elif self.rescale_radio.isChecked():
+            transformation = 3
+            value = self.spinBox_3.value()
 
-        set_angle = self.spinBox.value()
-
-        for i in layer.selectedFeatures():
-            geom=i.geometry()
-            geom.rotate(set_angle,QgsPoint(geom.centroid().asPoint()))
-            layer.changeGeometry(i.id(),geom)
-            #print geom.asPolyline()
-
-        layer.commitChanges()
-        layer.updateExtents()
-        layer.reload()
-        layer.removeSelection()
-
-# resize_line_scripts
-    def resize_line(self):
-
-        index = self.comboBox.currentIndex()
-        layer = self.comboBox.itemData(index)
-
-        #layer = self.iface.activeLayer()
-        layer_provider = layer.dataProvider()
-        layer.startEditing()
-        layer.selectAll()
-
-        set_length=self.spinBox_2.value()
-
-        for i in layer.selectedFeatures():
-            geom=i.geometry()
-            pt=geom.asPolyline()
-            dy=pt[1][1] - pt[0][1]
-            dx=pt[1][0] - pt[0][0]
-            angle = math.atan2(dy,dx)
-            length=geom.length()
-            startx=geom.centroid().asPoint()[0]+((0.5*length*set_length/length)*math.cos(angle))
-            starty=geom.centroid().asPoint()[1]+((0.5*length*set_length/length)*math.sin(angle))
-            endx=geom.centroid().asPoint()[0]-((0.5*length*set_length/length)*math.cos(angle))
-            endy=geom.centroid().asPoint()[1]-((0.5*length*set_length/length)*math.sin(angle))
-            n_geom=QgsFeature()
-            n_geom.setGeometry(QgsGeometry.fromPolyline([QgsPoint(startx,starty),QgsPoint(endx,endy)]))
-            layer.changeGeometry(i.id(),n_geom.geometry())
+        return transformation, value
 
 
-        layer.commitChanges()
-        layer.updateExtents()
-        layer.reload()
-        layer.removeSelection()
-
-# rescale_line_scripts
-    def rescale_line(self):
-
-        index = self.comboBox.currentIndex()
-        layer = self.comboBox.itemData(index)
-
-        #layer = self.iface.activeLayer()
-        layer_provider = layer.dataProvider()
-        layer.startEditing()
-        layer.selectAll()
-
-        set_scale=self.doubleSpinBox.value()
-
-        for i in layer.selectedFeatures():
-            geom=i.geometry()
-            pt=geom.asPolyline()
-            dy=pt[1][1] - pt[0][1]
-            dx=pt[1][0] - pt[0][0]
-            angle = math.atan2(dy,dx)
-            length=geom.length()
-            startx=geom.centroid().asPoint()[0]+((0.5*length*set_scale)*math.cos(angle))
-            starty=geom.centroid().asPoint()[1]+((0.5*length*set_scale)*math.sin(angle))
-            endx=geom.centroid().asPoint()[0]-((0.5*length*set_scale)*math.cos(angle))
-            endy=geom.centroid().asPoint()[1]-((0.5*length*set_scale)*math.sin(angle))
-            new_geom=QgsFeature()
-            new_geom.setGeometry(QgsGeometry.fromPolyline([QgsPoint(startx,starty),QgsPoint(endx,endy)]))
-            layer.changeGeometry(i.id(),new_geom.geometry())
-
-        layer.commitChanges()
-        layer.updateExtents()
-        layer.reload()
-        layer.removeSelection()
 
 
-################################# run and close methods #############################
-    def run_method(self):
-        if self.radioButton.isChecked():
-            self.rotate_line()
-            self.close()
-
-        elif self.radioButton_2.isChecked():
-            self.resize_line()
-            self.close()
-
-        elif self.radioButton_3.isChecked():
-            self.rescale_line()
-            self.close()
-        else:
-            self.close()
-
-    def close_method(self):
-        self.close()
-        # run close method

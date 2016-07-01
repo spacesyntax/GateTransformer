@@ -34,7 +34,16 @@ from qgis.gui import *
 import os
 from PyQt4 import QtCore, QtGui
 import math
-import math
+
+# this import python deploy-debug package
+# hashtag if debugging is not used.
+is_debug = True
+try:
+    import pydevd
+    has_pydevd = True
+except ImportError, e:
+    has_pydevd = False
+    is_debug = False
 
 class NetworkTransformer:
     """QGIS Plugin Implementation."""
@@ -53,6 +62,10 @@ class NetworkTransformer:
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
+
+        # transformer analysis
+        #self.transformer_analysis = Transformer_analysis.transformer_analysis(self.iface)
+
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -67,8 +80,9 @@ class NetworkTransformer:
             if qVersion() > '4.3.3':
                 QCoreApplication.installTranslator(self.translator)
 
-        # Create the dialog (after translation) and keep reference
+        # Create the dialog (after translation) and keep reference *creates new dialog object runs dialog __init__
         self.dlg = NetworkTransformerDialog()
+
 
         # Declare instance attributes
         self.actions = []
@@ -76,6 +90,13 @@ class NetworkTransformer:
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'NetworkTransformer')
         self.toolbar.setObjectName(u'NetworkTransformer')
+
+        # connects to QGIS-deployment
+        if has_pydevd and is_debug:
+            pydevd.settrace('localhost', port=53100, stdoutToServer=True, stderrToServer=True, suspend=False)
+
+
+
 
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -177,12 +198,139 @@ class NetworkTransformer:
         del self.toolbar
 
 
+
 ################################# activate dialog box #############################
 
     def run(self):
         """Run method that performs all the real work"""
         # show the dialog
         self.dlg.show()
+
+
+
+        ###### YOUR OWN CODE ######
+
+        # click pushButtons
+        # put code about some radio button has to be pressed
+        self.dlg.run_button.clicked.connect(self.run_method)
+        self.dlg.close_button.clicked.connect(self.close_method)
+
+        # put current layers into comboBox
+        layers = QgsMapLayerRegistry.instance().mapLayers().values()
+        layer_objects =[]
+        for layer in layers:
+            if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Line:
+                layer_objects.append((layer.name(),layer))
+        self.dlg.update_layer(layer_objects)
+
         # Run the dialog event loop
         result = self.dlg.exec_()
         # See if OK was pressed
+        print "hello world"
+
+########################### transformation block ########################
+
+# rotate_line_scripts
+    def rotate_line(self,value):
+
+        layer=self.dlg.get_layer()
+
+        provider = layer.dataProvider()
+        layer.startEditing()
+        layer.selectAll()
+
+        set_angle = value
+
+        for i in layer.selectedFeatures():
+            geom=i.geometry()
+            geom.rotate(set_angle,QgsPoint(geom.centroid().asPoint()))
+            layer.changeGeometry(i.id(),geom)
+            #print geom.asPolyline()
+
+        #layer.commitChanges()
+        layer.updateExtents()
+        layer.reload()
+        layer.removeSelection()
+
+# resize_line_scripts
+    def resize_line(self,value):
+
+        layer = self.dlg.get_layer()
+
+        layer_provider = layer.dataProvider()
+        layer.startEditing()
+        layer.selectAll()
+
+        set_length=value
+
+        for i in layer.selectedFeatures():
+            geom=i.geometry()
+            pt=geom.asPolyline()
+            dy=pt[1][1] - pt[0][1]
+            dx=pt[1][0] - pt[0][0]
+            angle = math.atan2(dy,dx)
+            length=geom.length()
+            startx=geom.centroid().asPoint()[0]+((0.5*length*set_length/length)*math.cos(angle))
+            starty=geom.centroid().asPoint()[1]+((0.5*length*set_length/length)*math.sin(angle))
+            endx=geom.centroid().asPoint()[0]-((0.5*length*set_length/length)*math.cos(angle))
+            endy=geom.centroid().asPoint()[1]-((0.5*length*set_length/length)*math.sin(angle))
+            n_geom=QgsFeature()
+            n_geom.setGeometry(QgsGeometry.fromPolyline([QgsPoint(startx,starty),QgsPoint(endx,endy)]))
+            layer.changeGeometry(i.id(),n_geom.geometry())
+
+
+        #layer.commitChanges()
+        layer.updateExtents()
+        layer.reload()
+        layer.removeSelection()
+
+# rescale_line_scripts
+    def rescale_line(self,value):
+
+        layer = self.dlg.get_layer()
+        layer_provider = layer.dataProvider()
+        layer.startEditing()
+        layer.selectAll()
+
+        set_scale=value
+
+        for i in layer.selectedFeatures():
+            geom=i.geometry()
+            pt=geom.asPolyline()
+            dy=pt[1][1] - pt[0][1]
+            dx=pt[1][0] - pt[0][0]
+            angle = math.atan2(dy,dx)
+            length=geom.length()
+            startx=geom.centroid().asPoint()[0]+((0.5*length*set_scale)*math.cos(angle))
+            starty=geom.centroid().asPoint()[1]+((0.5*length*set_scale)*math.sin(angle))
+            endx=geom.centroid().asPoint()[0]-((0.5*length*set_scale)*math.cos(angle))
+            endy=geom.centroid().asPoint()[1]-((0.5*length*set_scale)*math.sin(angle))
+            new_geom=QgsFeature()
+            new_geom.setGeometry(QgsGeometry.fromPolyline([QgsPoint(startx,starty),QgsPoint(endx,endy)]))
+            layer.changeGeometry(i.id(),new_geom.geometry())
+
+        #layer.commitChanges()
+        layer.updateExtents()
+        layer.reload()
+        layer.removeSelection()
+
+
+################################# run and close methods #############################
+    def run_method(self):
+        transformation,value = self.dlg.get_transformation()
+
+
+        if transformation==1:
+            self.rotate_line(value)
+
+        elif transformation==2:
+            self.resize_line(value)
+
+        elif transformation==3:
+            self.rescale_line(value)
+
+        self.close_method()
+
+    def close_method(self):
+        self.dlg.close()
+        # run close method

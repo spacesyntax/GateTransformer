@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="4" column="0">
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QRadioButton" name="resize_radio">
      <property name="text">
       <string>Resize Line</string>
      </property>
@@ -38,7 +38,7 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="rotate_radio">
      <property name="text">
       <string>Rotate Line</string>
      </property>
@@ -61,7 +61,7 @@
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="run_button">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -87,14 +87,14 @@
     </widget>
    </item>
    <item row="6" column="2">
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="close_button">
      <property name="text">
       <string>Close</string>
      </property>
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QRadioButton" name="radioButton_3">
+    <widget class="QRadioButton" name="rescale_radio">
      <property name="text">
       <string>Rescale Line</string>
      </property>
