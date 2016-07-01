@@ -26,11 +26,7 @@ import resources
 import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
 from PyQt4.QtGui import QAction, QIcon, QFileDialog, QMessageBox, QProgressBar,QComboBox
-from qgis.core import *
-from qgis.gui import *
-import os
 from PyQt4 import QtCore, QtGui
-import math
 import os
 from PyQt4 import QtGui, uic
 
@@ -38,14 +34,6 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'network_transformer_dialog_base.ui'))
 
 class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
-
-# dialog class has get and set update functions
-# this is in dialog.py
-# QtCore.pyqtSignal() - defines a signal
-# self.update.emit() - this emits signal
-# this is in tool.py
-# self.update.connect() - connects with signal
-# self.update.disconnect() - this disconnect with signal
 
 ############################ initialisation ############################
 
@@ -58,12 +46,18 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
         # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+
+        # this turns on rotate,resize,rescale signals
+        self.rotate_radio.toggled.connect(self.disable_button)
+        self.resize_radio.toggled.connect(self.disable_button)
+        self.rescale_radio.toggled.connect(self.disable_button)
+
+
         # rotate_button is checked for default
         self.rotate_radio.click()
 
 
-    # define series of function
-    # disable buttons - switch between gate transformation
+    # define a series of get/set/update/disable function
     # update layer - fill combo with layer lists
     def update_layer(self,layer_objects):
         for layer in layer_objects:
@@ -81,16 +75,29 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
         value = 0
         if self.rotate_radio.isChecked():
             transformation = 1
-            value = self.spinBox.value()
+            value = self.rotate_spinBox.value()
         elif self.resize_radio.isChecked():
             transformation = 2
-            value = self.spinBox_2.value()
+            value = self.resize_spinBox.value()
         elif self.rescale_radio.isChecked():
             transformation = 3
-            value = self.spinBox_3.value()
-
+            value = self.rescale_spinBox.value()
         return transformation, value
 
+    # disable buttons - this disables the other transformation when one is checked.
+    def disable_button(self):
+        if self.rotate_radio.isChecked():
+            self.rotate_spinBox.setEnabled(True)
+            self.resize_spinBox.setEnabled(False)
+            self.rescale_spinBox.setEnabled(False)
+        elif self.resize_radio.isChecked():
+            self.resize_spinBox.setEnabled(True)
+            self.rotate_spinBox.setEnabled(False)
+            self.rescale_spinBox.setEnabled(False)
+        elif self.rescale_radio.isChecked():
+            self.rescale_spinBox.setEnabled(True)
+            self.rotate_spinBox.setEnabled(False)
+            self.resize_spinBox.setEnabled(False)
 
 
 

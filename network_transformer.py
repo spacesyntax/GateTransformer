@@ -20,11 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
-from PyQt4.QtGui import QAction, QIcon
-# Initialize Qt resources from file resources.py
-import resources
-# Import the code for the dialog
 from network_transformer_dialog import NetworkTransformerDialog
 import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
@@ -34,9 +29,9 @@ from qgis.gui import *
 import os
 from PyQt4 import QtCore, QtGui
 import math
+#import Transformer_analysis
 
-# this import python deploy-debug package
-# hashtag if debugging is not used.
+# this import python deploy-debug package, hashtag is_debug if debugging is not used.
 is_debug = True
 try:
     import pydevd
@@ -94,9 +89,6 @@ class NetworkTransformer:
         # connects to QGIS-deployment
         if has_pydevd and is_debug:
             pydevd.settrace('localhost', port=53100, stdoutToServer=True, stderrToServer=True, suspend=False)
-
-
-
 
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -198,15 +190,12 @@ class NetworkTransformer:
         del self.toolbar
 
 
-
 ################################# activate dialog box #############################
 
     def run(self):
         """Run method that performs all the real work"""
         # show the dialog
         self.dlg.show()
-
-
 
         ###### YOUR OWN CODE ######
 
@@ -225,8 +214,6 @@ class NetworkTransformer:
 
         # Run the dialog event loop
         result = self.dlg.exec_()
-        # See if OK was pressed
-        print "hello world"
 
 ########################### transformation block ########################
 
@@ -234,11 +221,9 @@ class NetworkTransformer:
     def rotate_line(self,value):
 
         layer=self.dlg.get_layer()
-
         provider = layer.dataProvider()
         layer.startEditing()
         layer.selectAll()
-
         set_angle = value
 
         for i in layer.selectedFeatures():
@@ -319,9 +304,9 @@ class NetworkTransformer:
     def run_method(self):
         transformation,value = self.dlg.get_transformation()
 
-
         if transformation==1:
             self.rotate_line(value)
+            #self.transformer_analysis.rotate_line(layer,value)
 
         elif transformation==2:
             self.resize_line(value)

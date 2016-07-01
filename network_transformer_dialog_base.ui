@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item row="4" column="2">
-    <widget class="QSpinBox" name="spinBox_2">
+    <widget class="QSpinBox" name="resize_spinBox">
      <property name="suffix">
       <string>m</string>
      </property>
@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item row="3" column="2">
-    <widget class="QSpinBox" name="spinBox">
+    <widget class="QSpinBox" name="rotate_spinBox">
      <property name="suffix">
       <string>deg</string>
      </property>
@@ -74,7 +74,7 @@
     </widget>
    </item>
    <item row="5" column="2">
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+    <widget class="QDoubleSpinBox" name="rescale_spinBox">
      <property name="maximum">
       <double>1000000000.000000000000000</double>
      </property>
