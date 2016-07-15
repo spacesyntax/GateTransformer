@@ -32,7 +32,7 @@ import math
 #import Transformer_analysis
 
 # this import python deploy-debug package, hashtag is_debug if debugging is not used.
-is_debug = True
+is_debug = False
 try:
     import pydevd
     has_pydevd = True
