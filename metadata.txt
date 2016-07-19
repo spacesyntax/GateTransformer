@@ -7,14 +7,14 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=NetworkTransformer
+name=GateTransformer
 qgisMinimumVersion=2.0
-description=This plugin performs basic transformation on a network class in qgis.
-version=0.1
+description=This plugin performs a basic gate transformation in qgis.
+version=0.2
 author=Stephen Law
 email=s.law@spacesyntax.com
 
-about=NetworkTransformer date: 2016-02-29 copyright: (C) 2016 by Stephen Law email: s.law@spacesyntax.com
+about=GateTransformer date: 2016-02-29 copyright: (C) 2016 by Stephen Law email: s.law@spacesyntax.com
 
 tracker=github.com
 repository=github.com
