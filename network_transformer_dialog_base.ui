@@ -6,18 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>725</width>
-    <height>292</height>
+    <width>1587</width>
+    <height>549</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>NetworkTransformer</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0">
+    <widget class="QRadioButton" name="rotate_radio">
+     <property name="text">
+      <string>Rotate Line (degree)</string>
+     </property>
+    </widget>
+   </item>
    <item row="4" column="0">
     <widget class="QRadioButton" name="resize_radio">
      <property name="text">
-      <string>Resize Line</string>
+      <string>Resize Line (metre)</string>
      </property>
     </widget>
    </item>
@@ -37,13 +44,6 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QRadioButton" name="rotate_radio">
-     <property name="text">
-      <string>Rotate Line</string>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="2">
     <widget class="QSpinBox" name="rotate_spinBox">
      <property name="suffix">
@@ -60,16 +60,10 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
-    <widget class="QPushButton" name="run_button">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="5" column="0">
+    <widget class="QRadioButton" name="rescale_radio">
      <property name="text">
-      <string>Run</string>
+      <string>Rescale Line (multiple)</string>
      </property>
     </widget>
    </item>
@@ -86,27 +80,33 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="2">
-    <widget class="QPushButton" name="close_button">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QRadioButton" name="rescale_radio">
-     <property name="text">
-      <string>Rescale Line</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="2">
     <widget class="QComboBox" name="comboBox"/>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Layer:</string>
+      <string>Gates Layer:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="run_button">
+     <property name="text">
+      <string>Transform</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QPushButton" name="close_button">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Close</string>
      </property>
     </widget>
    </item>

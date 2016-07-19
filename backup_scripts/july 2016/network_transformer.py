@@ -55,7 +55,7 @@ import Transformer_analysis
 #import Transformer_analysis
 
 # this import python deploy-debug package, hashtag is_debug if debugging is not used.
-is_debug = False
+is_debug = True
 try:
     import pydevd
     has_pydevd = True
