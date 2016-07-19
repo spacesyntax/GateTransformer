@@ -244,15 +244,12 @@ class NetworkTransformer:
         transformation,value = self.dlg.get_transformation()
 
         if transformation==1:
-            #self.rotate_line(value)
             self.transformer_analysis.rotate_line02(layer,value)
 
         elif transformation==2:
-            #self.resize_line(value)
             self.transformer_analysis.resize_line02(layer,value)
 
         elif transformation==3:
-            #self.rescale_line(value)
             self.transformer_analysis.rescale_line02(layer,value)
 
         self.close_method()
