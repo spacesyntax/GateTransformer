@@ -21,27 +21,6 @@
 """
 
 # -*- coding: utf-8 -*-
-"""
-/***************************************************************************
- NetworkTransformer
-                                 A QGIS plugin
- This plugin performs basic transformation on a network class in qgis.
-                              -------------------
-        begin                : 2016-02-29
-        git sha              : $Format:%H$
-        copyright            : (C) 2016 by Stephen Law
-        email                : s.law@spacesyntax.com
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-"""
 from network_transformer_dialog import NetworkTransformerDialog
 import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
