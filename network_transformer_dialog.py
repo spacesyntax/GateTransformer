@@ -62,6 +62,7 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
 
     # update layer - fill combo with layer lists
     def update_layer(self,layer_objects):
+        self.comboBox.clear()
         for layer in layer_objects:
             self.comboBox.addItem(layer[0],layer[1])
 

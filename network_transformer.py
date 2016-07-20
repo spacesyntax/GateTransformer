@@ -218,7 +218,7 @@ class NetworkTransformer:
 
 ################################# run and close methods #############################
     def run_method(self):
-        self.dlg.show()
+        #self.dlg.show()
         layer=self.dlg.get_layer()
         transformation,value = self.dlg.get_transformation()
 
@@ -231,7 +231,7 @@ class NetworkTransformer:
         elif transformation==3:
             self.transformer_analysis.rescale_line02(layer,value)
 
-        self.close_method()
+        #self.close_method()
 
     def close_method(self):
         self.dlg.close()
