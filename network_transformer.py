@@ -31,7 +31,7 @@ import os
 #from PyQt4 import QtCore, QtGui
 import math
 import Transformer_analysis
-#import Transformer_analysis
+
 
 # this import python deploy-debug package, hashtag is_debug if debugging is not used.
 is_debug = False
@@ -67,7 +67,7 @@ class NetworkTransformer:
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'NetworkTransformer_{}.qm'.format(locale))
+            'GateTransformer_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -81,15 +81,16 @@ class NetworkTransformer:
 
 
         # Declare instance attributes
+        # this was previous u'NetworkTransformer
         self.actions = []
-        self.menu = self.tr(u'&NetworkTransformer')
+        self.menu = self.tr(u'&GateTransformer')
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar(u'NetworkTransformer')
-        self.toolbar.setObjectName(u'NetworkTransformer')
+        self.toolbar = self.iface.addToolBar(u'GateTransformer')
+        self.toolbar.setObjectName(u'GateTransformer')
 
         # connects to QGIS-deployment
         if has_pydevd and is_debug:
-            pydevd.settrace('localhost', port=53100, stdoutToServer=True, stderrToServer=True, suspend=False)
+            pydevd.settrace('localhost', port=53100, stdoutToServer=True, stderrToServer=True, suspend=True)
 
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -224,12 +225,15 @@ class NetworkTransformer:
 
         if transformation==1:
             self.transformer_analysis.rotate_line02(layer,value)
+            self.close_method()
 
         elif transformation==2:
             self.transformer_analysis.resize_line02(layer,value)
+            self.close_method()
 
         elif transformation==3:
             self.transformer_analysis.rescale_line02(layer,value)
+            self.close_method()
 
         #self.close_method()
 
@@ -254,9 +258,12 @@ class NetworkTransformer:
             geom.rotate(set_angle,QgsPoint(geom.centroid().asPoint()))
             layer.changeGeometry(i.id(),geom)
 
+        #layer.commitChanges()
         layer.updateExtents()
         layer.reload()
         layer.removeSelection()
+        #layer.clear()
+        #layer.refresh()
 
 # resize_line_scripts
     def resize_line(self,value):
