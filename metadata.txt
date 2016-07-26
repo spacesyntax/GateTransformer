@@ -10,29 +10,39 @@
 name=GateTransformer
 qgisMinimumVersion=2.0
 description=This plugin performs a basic gate transformation in qgis.
-version=0.2
+version=0.0.3
 author=Stephen Law
 email=s.law@spacesyntax.com
+date: 2016-02-29
+copyright: (C) 2016 by Space Syntax Limited
 
-about=GateTransformer date: 2016-02-29 copyright: (C) 2016 by Stephen Law email: s.law@spacesyntax.com
+# need to add paragraph here #
 
-tracker=github.com
-repository=github.com
+about=  Gate Transformer is a plugin to modify the geometry of gates used in space syntax movement observations.
+        The space syntax community is the key users for the plugin.
+        The plugin and was developed by Space Syntax Open Digital Works (C) 2016 Space Syntax Ltd.
+        The author of the plugin is Stephen Law (email: s.law@spacesyntax.com).
+
+
+tracker=https://github.com/OpenDigitalWorks/GateTransformer/issues
+repository=https://github.com/OpenDigitalWorks/GateTransformer
+
 # End of mandatory metadata
 
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog=  version 0.0.3 : add transformer class
+            version 0.0.2 : restructure tool and dialog class
+            version 0.0.1 : Initial Build
 
 # Tags are comma separated with spaces allowed
-tags=
+tags=space syntax, pedestrian gate counts, line vector transformation
 
-homepage=
+homepage=https://github.com/OpenDigitalWorks
 category=Vector
 icon=icon.png
-# experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False

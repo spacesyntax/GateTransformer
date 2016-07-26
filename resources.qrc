@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/NetworkTransformer" >
+    <qresource prefix="/plugins/GateTransformer" >
         <file>icon.png</file>
     </qresource>
 </RCC>

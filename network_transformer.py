@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 """
 /***************************************************************************
- NetworkTransformer
+ GateTransformer
                                  A QGIS plugin
- This plugin performs basic transformation on a network class in qgis.
+ This plugin performs basic transformation on a line in qgis.
                               -------------------
         begin                : 2016-02-29
-        git sha              : $Format:%H$
-        copyright            : (C) 2016 by Stephen Law
+        author               : Stephen Law
+        copyright            : (C) 2016 by Space Syntax Limited
         email                : s.law@spacesyntax.com
  ***************************************************************************/
 
@@ -14,13 +15,12 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 """
 
-# -*- coding: utf-8 -*-
 from network_transformer_dialog import NetworkTransformerDialog
 import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
@@ -31,7 +31,7 @@ import os
 #from PyQt4 import QtCore, QtGui
 import math
 import Transformer_analysis
-
+#import processing
 
 # this import python deploy-debug package, hashtag is_debug if debugging is not used.
 is_debug = False
@@ -80,13 +80,13 @@ class NetworkTransformer:
         self.dlg = NetworkTransformerDialog()
 
 
-        # Declare instance attributes
-        # this was previous u'NetworkTransformer
+        # Declare instance attributes#
         self.actions = []
-        self.menu = self.tr(u'&GateTransformer')
+        self.menu = self.tr(u'&Space Syntax Toolkit')
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'GateTransformer')
         self.toolbar.setObjectName(u'GateTransformer')
+        # self.toolbar - self.iface.pluginToolBar()
 
         # connects to QGIS-deployment
         if has_pydevd and is_debug:
@@ -104,10 +104,9 @@ class NetworkTransformer:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('NetworkTransformer', message)
+        return QCoreApplication.translate('GateTransformer', message)
 
     def add_action(self,icon_path,text,callback,enabled_flag=True,add_to_menu=True,add_to_toolbar=True,status_tip=None,whats_this=None,parent=None):
-        x=1
 
         """Add a toolbar icon to the toolbar.
 
@@ -174,18 +173,22 @@ class NetworkTransformer:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/NetworkTransformer/icon.png'
+        icon_path = ':/plugins/GateTransformer/icon.png'
         self.add_action(
             icon_path,
-            text=self.tr(u'qgis network transformer'),
+            text=self.tr(u'& Gate Transformer'),
             callback=self.run,
-            parent=self.iface.mainWindow())
+            parent=self.iface.mainWindow(),
+            status_tip='Gate Transformer'
+        )
+
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginVectorMenu(
-                self.tr(u'&NetworkTransformer'),
+                #self.tr(u'&NetworkTransformer'),
+                self.menu,
                 action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
