@@ -1,7 +1,7 @@
 Plugin Builder Results
 
 Your plugin NetworkTransformer was created in:
-    C:\Users\s.law\.qgis2\python\plugins\NetworkTransformer
+    C:\Users\s.law\.qgis2\python\plugins\GateTransformer
 
 Your QGIS plugin directory is located at:
     C:/Users/s.law/.qgis2/python/plugins
@@ -17,7 +17,7 @@ What's Next:
 
   * Test the plugin by enabling it in the QGIS plugin manager
 
-  * Customize it by editing the implementation file: ``network_transformer.py``
+  * Customize it by editing the implementation file: ``gate_transformer.py``
 
   * Create your own custom icon, replacing the default icon.png
 
