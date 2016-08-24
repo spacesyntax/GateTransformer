@@ -15,8 +15,7 @@ This directory can be found here:
 * Linux: home/[your user name]/.qgis2/python/plugins/
 
 This directory is usually hidden and you must make hidden files visible.
-Under Mac OSX you can open the folder in Finder by selecting 'Go > Go To Folder...' and
-typing '~/.qgis2/python/plugins/'. If you haven’t installed any QGIS plugins so far, you need to create the ‘plugins’ directory in
+Under Mac OSX you can open the folder in Finder by selecting 'Go > Go To Folder...' and typing '~/.qgis2/python/plugins/'. If you haven’t installed any QGIS plugins so far, you need to create the ‘plugins’ directory in
 the ‘.qgis2/python/’ directory. After copying the plugin, it will be available in the plugin manager window once you (re)start
 QGIS. Check the box next to the plugin to load it.
 
