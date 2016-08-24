@@ -6,9 +6,8 @@ Gate Transformer is a plugin to modify the geometry of gates used in space synta
 Gates are usually drawn perpendicular to the axial line, with varying lengths. For presentation of movement observations the typical output is a map showing lines along the axial lines to indicate the movement direction. The gates should all be rotated 90degrees and have the same length.
 
 ## Installation
-Currently the plugin is not available through the QGIS plugins repository. To install you
-need to download the latest Plugin.zip file from the releases page (link). Unzip and copy
-the entire folder into the QGIS plugins directory.
+Currently the plugin is not available through the QGIS plugins repository. To install you need to download the latest GateTransformer_private_0.0.1B.zip file from the releases page (https://github.com/OpenDigitalWorks/GateTransformer/releases). 
+Unzip and copy the entire folder into the QGIS plugins directory.
 
 This directory can be found here:
 * MS Windows: C:\Users\[your user name]\.qgis2\python\plugins\
