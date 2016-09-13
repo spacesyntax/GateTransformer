@@ -24,8 +24,8 @@ QGIS (2.0 or above) - http://www.qgis.org/en/site/
 
 ## How to
 * **Gates layer** Choose the line-based gate layer from the drop-down menu that you want to transform
-* **Rotate Line** (degree) Define the angle in degrees for rotating the selected gates.
-* **Resize Line** (metre) Define the length in metres for resizing the selected gates.
-* **Rescale Line** (multiple) Define the multiple in ratio for rescaling the selected gates.
+* **Rotate Line** (degree) Define the angle in degrees for rotating the selected gates
+* **Resize Line** (metre) Define the length in metres for resizing the selected gates
+* **Rescale Line** (multiple) Define the multiple in ratio for rescaling the selected gates
 * **Transform** Pressing the transform button will activate the analysis for the selected transformation
 * **Close** Pressing close will close and terminate the Gate Transformer
