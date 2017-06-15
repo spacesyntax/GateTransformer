@@ -64,8 +64,14 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
     # update layer - fill combo with layer lists
     def update_layer(self,layer_objects):
         self.comboBox.clear()
-        for layer in layer_objects:
-            self.comboBox.addItem(layer[0],layer[1])
+        if layer_objects:
+            for layer in layer_objects:
+                self.comboBox.addItem(layer[0],layer[1])
+            self.disable_all(False)
+            self.disable_button()
+        else:
+            self.comboBox.addItem('No vector layer found.')
+            self.disable_all(True)
 
     # get layer - retrieving the value of the current selected layer
     def get_layer(self):
@@ -103,5 +109,12 @@ class NetworkTransformerDialog(QtGui.QDialog, FORM_CLASS):
             self.rotate_spinBox.setEnabled(False)
             self.resize_spinBox.setEnabled(False)
 
-
-
+    # disable all buttons if no layer is available
+    def disable_all(self, onoff):
+        self.rotate_radio.setDisabled(onoff)
+        self.rotate_spinBox.setDisabled(onoff)
+        self.resize_radio.setDisabled(onoff)
+        self.resize_spinBox.setDisabled(onoff)
+        self.rescale_radio.setDisabled(onoff)
+        self.rescale_spinBox.setDisabled(onoff)
+        self.run_button.setDisabled(onoff)
