@@ -28,8 +28,7 @@ from PyQt4.QtGui import QAction, QIcon, QFileDialog, QMessageBox, QProgressBar,Q
 from qgis.core import *
 #from qgis.gui import *
 import os
-#from PyQt4 import QtCore, QtGui
-import math
+
 import Transformer_analysis
 #import processing
 
