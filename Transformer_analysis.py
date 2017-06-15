@@ -24,14 +24,71 @@ from PyQt4.QtCore import *
 from qgis.core import *
 import math
 
+from network_transformer_dialog import NetworkTransformerDialog
+
 # analysis class
 class transformer_analysis(QObject):
 
     # initialise class with self and iface
     def __init__(self,iface):
-        #QObject.__init__(self)
+        QObject.__init__(self)
+
         self.iface=iface
 
+        # create the dialog object
+        self.dlg = NetworkTransformerDialog()
+        # setup signals with the transformation method
+        self.dlg.run_button.clicked.connect(self.run_method)
+        self.dlg.close_button.clicked.connect(self.close_method)
+
+    # prepare the dialog
+    def load_gui(self):
+        # put current layers into comboBox
+        self.dlg.update_layer(self.get_layers())
+
+        # show the dialog
+        self.dlg.show()
+
+        # Run the dialog event loop
+        result = self.dlg.exec_()
+
+    def unload_gui(self):
+        self.dlg.run_button.clicked.disconnect(self.run_method)
+        self.dlg.close_button.clicked.disconnect(self.close_method)
+
+    def get_layers(self):
+        layers = QgsMapLayerRegistry.instance().mapLayers().values()
+        layer_objects = []
+        for layer in layers:
+            if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Line:
+                layer_objects.append((layer.name(), layer))
+
+        return layer_objects
+
+    ################################# run and close methods #############################
+    def run_method(self):
+        layer = self.dlg.get_layer()
+        transformation, value = self.dlg.get_transformation()
+
+        if transformation == 1:
+            self.rotate_line02(layer, value)
+            #self.close_method()
+
+        elif transformation == 2:
+            self.resize_line02(layer, value)
+            #self.close_method()
+
+        elif transformation == 3:
+            self.rescale_line02(layer, value)
+            #self.close_method()
+
+        # self.close_method()
+
+    def close_method(self):
+        self.dlg.close()
+
+
+    ########################### transformation block ########################
     # rotate_line_scripts
     def rotate_line02(self,layer,value):
 

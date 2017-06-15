@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 
-from network_transformer_dialog import NetworkTransformerDialog
+#from network_transformer_dialog import NetworkTransformerDialog
 import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
 from PyQt4.QtGui import QAction, QIcon, QFileDialog, QMessageBox, QProgressBar,QComboBox
@@ -77,8 +77,7 @@ class NetworkTransformer:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference *creates new dialog object runs dialog __init__
-        self.dlg = NetworkTransformerDialog()
-
+        #self.dlg = NetworkTransformerDialog()
 
         # Declare instance attributes#
         self.actions = []
@@ -90,7 +89,7 @@ class NetworkTransformer:
 
         # connects to QGIS-deployment
         if has_pydevd and is_debug:
-            pydevd.settrace('localhost', port=53100, stdoutToServer=True, stderrToServer=True, suspend=True)
+            pydevd.settrace('localhost', port=53100, stdoutToServer=True, stderrToServer=True, suspend=False)
 
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -182,7 +181,6 @@ class NetworkTransformer:
             status_tip='Gate Transformer'
         )
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -194,138 +192,8 @@ class NetworkTransformer:
         # remove the toolbar
         del self.toolbar
 
-################################# activate dialog box #############################
+        self.transformer_analysis.unload_gui()
 
     def run(self):
         """Run method that performs all the real work"""
-        # show the dialog
-        self.dlg.show()
-
-        ###### YOUR OWN CODE ######
-
-        # click pushButtons
-        # put code about some radio button has to be pressed
-        self.dlg.run_button.clicked.connect(self.run_method)
-        self.dlg.close_button.clicked.connect(self.close_method)
-
-        # put current layers into comboBox
-        layers = QgsMapLayerRegistry.instance().mapLayers().values()
-        layer_objects =[]
-        for layer in layers:
-            if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Line:
-                layer_objects.append((layer.name(),layer))
-        self.dlg.update_layer(layer_objects)
-
-        # Run the dialog event loop
-        result = self.dlg.exec_()
-
-
-################################# run and close methods #############################
-    def run_method(self):
-        #self.dlg.show()
-        layer=self.dlg.get_layer()
-        transformation,value = self.dlg.get_transformation()
-
-        if transformation==1:
-            self.transformer_analysis.rotate_line02(layer,value)
-            self.close_method()
-
-        elif transformation==2:
-            self.transformer_analysis.resize_line02(layer,value)
-            self.close_method()
-
-        elif transformation==3:
-            self.transformer_analysis.rescale_line02(layer,value)
-            self.close_method()
-
-        #self.close_method()
-
-    def close_method(self):
-        self.dlg.close()
-        # run close method
-
-
-########################### transformation block ########################
-
-# rotate_line_scripts
-    def rotate_line(self,value):
-
-        layer=self.dlg.get_layer()
-        #provider = layer.dataProvider()
-        layer.startEditing()
-        layer.selectAll()
-        set_angle = value
-
-        for i in layer.selectedFeatures():
-            geom=i.geometry()
-            geom.rotate(set_angle,QgsPoint(geom.centroid().asPoint()))
-            layer.changeGeometry(i.id(),geom)
-
-        #layer.commitChanges()
-        layer.updateExtents()
-        layer.reload()
-        layer.removeSelection()
-        #layer.clear()
-        #layer.refresh()
-
-# resize_line_scripts
-    def resize_line(self,value):
-
-        layer = self.dlg.get_layer()
-
-        layer_provider = layer.dataProvider()
-        layer.startEditing()
-        layer.selectAll()
-
-        set_length=value
-
-        for i in layer.selectedFeatures():
-            geom=i.geometry()
-            pt=geom.asPolyline()
-            dy=pt[1][1] - pt[0][1]
-            dx=pt[1][0] - pt[0][0]
-            angle = math.atan2(dy,dx)
-            length=geom.length()
-            startx=geom.centroid().asPoint()[0]+((0.5*length*set_length/length)*math.cos(angle))
-            starty=geom.centroid().asPoint()[1]+((0.5*length*set_length/length)*math.sin(angle))
-            endx=geom.centroid().asPoint()[0]-((0.5*length*set_length/length)*math.cos(angle))
-            endy=geom.centroid().asPoint()[1]-((0.5*length*set_length/length)*math.sin(angle))
-            n_geom=QgsFeature()
-            n_geom.setGeometry(QgsGeometry.fromPolyline([QgsPoint(startx,starty),QgsPoint(endx,endy)]))
-            layer.changeGeometry(i.id(),n_geom.geometry())
-
-
-        #layer.commitChanges()
-        layer.updateExtents()
-        layer.reload()
-        layer.removeSelection()
-
-# rescale_line_scripts
-    def rescale_line(self,value):
-
-        layer = self.dlg.get_layer()
-        layer_provider = layer.dataProvider()
-        layer.startEditing()
-        layer.selectAll()
-
-        set_scale=value
-
-        for i in layer.selectedFeatures():
-            geom=i.geometry()
-            pt=geom.asPolyline()
-            dy=pt[1][1] - pt[0][1]
-            dx=pt[1][0] - pt[0][0]
-            angle = math.atan2(dy,dx)
-            length=geom.length()
-            startx=geom.centroid().asPoint()[0]+((0.5*length*set_scale)*math.cos(angle))
-            starty=geom.centroid().asPoint()[1]+((0.5*length*set_scale)*math.sin(angle))
-            endx=geom.centroid().asPoint()[0]-((0.5*length*set_scale)*math.cos(angle))
-            endy=geom.centroid().asPoint()[1]-((0.5*length*set_scale)*math.sin(angle))
-            new_geom=QgsFeature()
-            new_geom.setGeometry(QgsGeometry.fromPolyline([QgsPoint(startx,starty),QgsPoint(endx,endy)]))
-            layer.changeGeometry(i.id(),new_geom.geometry())
-
-        #layer.commitChanges()
-        layer.updateExtents()
-        layer.reload()
-        layer.removeSelection()
+        self.transformer_analysis.load_gui()
