@@ -45,7 +45,6 @@ class transformer_analysis(QObject):
     def load_gui(self):
         # put current layers into comboBox
         self.dlg.update_layer(self.get_layers())
-
         # show the dialog
         self.dlg.show()
 

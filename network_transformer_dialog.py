@@ -22,16 +22,11 @@
 """
 
 # Initialize Qt resources from file resources.py
-import os
-from PyQt4 import QtGui, uic
-import resources
-import os.path
-#from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
-#from PyQt4.QtGui import QAction, QIcon
-#from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
-#from PyQt4.QtGui import QAction, QIcon, QFileDialog, QMessageBox, QProgressBar,QComboBox
-#from PyQt4 import QtCore, QtGui
 
+from PyQt4 import QtGui, uic
+
+import os.path
+import resources
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'network_transformer_dialog_base.ui'))
