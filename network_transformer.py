@@ -22,14 +22,16 @@
 """
 
 #from network_transformer_dialog import NetworkTransformerDialog
-import os.path
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QVariant, pyqtSlot
-from PyQt4.QtGui import QAction, QIcon, QFileDialog, QMessageBox, QProgressBar,QComboBox
+from PyQt4.QtGui import QAction, QIcon
+
 from qgis.core import *
 #from qgis.gui import *
+
+import os.path
 import os
 
-import Transformer_analysis
+import transformer_analysis
 #import processing
 
 # this import python deploy-debug package, hashtag is_debug if debugging is not used.
@@ -40,6 +42,7 @@ try:
 except ImportError, e:
     has_pydevd = False
     is_debug = False
+
 
 class NetworkTransformer:
     """QGIS Plugin Implementation."""
@@ -59,7 +62,7 @@ class NetworkTransformer:
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # transformer analysis class initialisation
-        self.transformer_analysis = Transformer_analysis.transformer_analysis(self.iface)
+        self.transformer_analysis = transformer_analysis.TransformerAnalysis(self.iface)
 
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
@@ -84,7 +87,6 @@ class NetworkTransformer:
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'GateTransformer')
         self.toolbar.setObjectName(u'GateTransformer')
-        # self.toolbar - self.iface.pluginToolBar()
 
         # connects to QGIS-deployment
         if has_pydevd and is_debug:

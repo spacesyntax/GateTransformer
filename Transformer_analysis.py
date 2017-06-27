@@ -27,10 +27,10 @@ import math
 from network_transformer_dialog import NetworkTransformerDialog
 
 # analysis class
-class transformer_analysis(QObject):
+class TransformerAnalysis(QObject):
 
     # initialise class with self and iface
-    def __init__(self,iface):
+    def __init__(self, iface):
         QObject.__init__(self)
 
         self.iface=iface
