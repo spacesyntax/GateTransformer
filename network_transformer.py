@@ -54,15 +54,13 @@ class NetworkTransformer:
 
         :param iface: An interface instance that will be passed to this class
             which provides the hook by which you can manipulate the QGIS
-            application at run time.
+            applimpoication at run time.
         :type iface: QgsInterface
         """
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
-        # transformer analysis class initialisation
-        self.transformer_analysis = transformer_analysis.TransformerAnalysis(self.iface)
 
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
@@ -79,7 +77,8 @@ class NetworkTransformer:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference *creates new dialog object runs dialog __init__
-        #self.dlg = NetworkTransformerDialog()
+        # transformer analysis class initialisation
+        self.transformer_analysis = transformer_analysis.TransformerAnalysis(self.iface)
 
         # Declare instance attributes#
         self.actions = []
